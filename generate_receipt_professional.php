@@ -1,0 +1,490 @@
+<?php
+// Professional PDF Receipt Generator
+// This script creates a professional receipt using HTML to PDF conversion
+// Usage: generate_receipt_professional($appointment_id, $saveToFile = true)
+
+require_once __DIR__ . '/config.php';
+
+function generate_receipt_professional($appointment_id, $saveToFile = true) {
+    global $mysqli;
+    $appointment_id = (int)$appointment_id;
+    
+    // Get appointment details with owner information
+    $stmt = $mysqli->prepare('SELECT a.id, a.date, a.time, a.service, a.status, p.pet_name, p.type, p.age, o.owner_name, o.email, o.phone, o.address FROM appointments a JOIN pets p ON a.pet_id = p.id JOIN owners o ON p.owner_id = o.id WHERE a.id = ? LIMIT 1');
+    $stmt->bind_param('i', $appointment_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc();
+    $stmt->close();
+    
+    if (!$data) { 
+        return false; 
+    }
+    
+    // Generate HTML receipt
+    $html = generate_receipt_html_professional($data);
+    
+    // Create receipts directory if it doesn't exist
+    $receiptsDir = __DIR__ . '/receipts';
+    if (!is_dir($receiptsDir)) { 
+        mkdir($receiptsDir, 0777, true); 
+    }
+    
+    $htmlFilePath = $receiptsDir . '/appointment_' . $appointment_id . '.html';
+    $pdfFilePath = $receiptsDir . '/appointment_' . $appointment_id . '.pdf';
+    
+    // Save HTML file
+    file_put_contents($htmlFilePath, $html);
+    
+    // For now, we'll use a simple approach that works with most browsers
+    // The HTML file can be opened and printed as PDF
+    if ($saveToFile) {
+        return $htmlFilePath; // Return HTML file path for download
+    } else {
+        // Output HTML for direct viewing
+        header('Content-Type: text/html; charset=utf-8');
+        echo $html;
+        return true;
+    }
+}
+
+function generate_receipt_html_professional($data) {
+    $receiptNumber = 'APT-' . str_pad($data['id'], 6, '0', STR_PAD_LEFT);
+    $currentDate = date('M j, Y');
+    $appointmentDate = date('M j, Y', strtotime($data['date']));
+    $appointmentTime = date('g:i A', strtotime($data['time']));
+    
+    // Status styling
+    $statusColor = '';
+    $statusBg = '';
+    switch($data['status']) {
+        case 'Approved':
+            $statusColor = '#ffffff';
+            $statusBg = '#22c55e';
+            break;
+        case 'Pending':
+            $statusColor = '#ffffff';
+            $statusBg = '#f59e0b';
+            break;
+        case 'Cancelled':
+            $statusColor = '#ffffff';
+            $statusBg = '#ef4444';
+            break;
+        default:
+            $statusColor = '#ffffff';
+            $statusBg = '#6b7280';
+    }
+    
+    $html = '<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Receipt - Pets Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: white;
+            padding: 20px;
+            font-size: 14px;
+        }
+        
+        .receipt-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border: 2px solid #e02222;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(224, 34, 34, 0.15);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #e02222 0%, #dc2626 50%, #b91c1c 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.95;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .receipt-title {
+            background: linear-gradient(90deg, #f8f9fa 0%, #ffffff 50%, #f8f9fa 100%);
+            padding: 25px;
+            text-align: center;
+            border-bottom: 4px solid #e02222;
+            position: relative;
+        }
+        
+        .receipt-title h2 {
+            color: #e02222;
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .content {
+            padding: 40px 30px;
+            background: white;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            background: #fafbfc;
+            border-radius: 8px;
+            padding: 25px;
+            border-left: 5px solid #e02222;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            color: #e02222;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e02222;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: "●";
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .info-label {
+            font-weight: 700;
+            color: #374151;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 4px;
+        }
+        
+        .info-value {
+            color: #1f2937;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: ' . $statusColor . ';
+            background-color: ' . $statusBg . ';
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .address-item {
+            background: white;
+            border-radius: 6px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e5e7eb;
+            margin-top: 15px;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 30px;
+            text-align: center;
+            border-top: 3px solid #e02222;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #e02222, #dc2626);
+            border-radius: 0 0 3px 3px;
+        }
+        
+        .footer p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .footer .brand {
+            color: #e02222;
+            font-weight: 700;
+            font-size: 18px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .contact-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px -10px 0 -10px;
+        }
+        
+        .contact-info p {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        
+        .contact-info .main-contact {
+            font-size: 14px;
+            color: #e02222;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+                font-size: 12px;
+            }
+            
+            .receipt-container {
+                box-shadow: none;
+                border: 2px solid #e02222;
+                margin: 0;
+                max-width: none;
+            }
+            
+            .section {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .receipt-title h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <h1>PETS CARE</h1>
+                <p>Professional Veterinary Care Services</p>
+            </div>
+        </div>
+        
+        <!-- Receipt Title -->
+        <div class="receipt-title">
+            <h2>Appointment Receipt</h2>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+            <!-- Appointment Details -->
+            <div class="section">
+                <h3 class="section-title">Appointment Details</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Receipt Number</span>
+                        <span class="info-value">' . $receiptNumber . '</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Date Issued</span>
+                        <span class="info-value">' . $currentDate . '</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Status</span>
+                        <span class="info-value">
+                            <span class="status-badge">' . strtoupper($data['status']) . '</span>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Service Date</span>
+                        <span class="info-value">' . $appointmentDate . '</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pet Information -->
+            <div class="section">
+                <h3 class="section-title">Pet Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Pet Name</span>
+                        <span class="info-value">' . htmlspecialchars($data['pet_name']) . '</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Animal Type</span>
+                        <span class="info-value">' . htmlspecialchars($data['type']) . '</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Age</span>
+                        <span class="info-value">' . $data['age'] . ' years old</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Service Requested</span>
+                        <span class="info-value">' . htmlspecialchars($data['service']) . '</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Owner Information -->
+            <div class="section">
+                <h3 class="section-title">Owner Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Owner Name</span>
+                        <span class="info-value">' . htmlspecialchars($data['owner_name']) . '</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Phone Number</span>
+                        <span class="info-value">' . htmlspecialchars($data['phone']) . '</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email Address</span>
+                        <span class="info-value">' . htmlspecialchars($data['email']) . '</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Appointment Time</span>
+                        <span class="info-value">' . $appointmentTime . '</span>
+                    </div>
+                </div>
+                <div class="address-item">
+                    <span class="info-label">Full Address</span>
+                    <span class="info-value">' . htmlspecialchars($data['address']) . '</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>Thank you for choosing <span class="brand">Pets Care</span> for your veterinary needs.</p>
+            <p>We appreciate your trust in our professional veterinary services.</p>
+            <p><strong>This receipt is valid for approved appointments only.</strong></p>
+            
+            <div class="contact-info">
+                <p class="main-contact">Pets Care - Professional Veterinary Services</p>
+                <p>📧 Email: info@petscare.com</p>
+                <p>📞 Phone: (555) 123-4567</p>
+                <p>🌐 Website: www.petscare.com</p>
+                <p>© 2025 Pets Care. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-print when page loads (optional - uncomment to enable)
+        window.onload = function() {
+            // Uncomment the next line to auto-print the receipt
+            // setTimeout(() => window.print(), 1000);
+        };
+        
+        // Add print functionality
+        function printReceipt() {
+            window.print();
+        }
+        
+        // Add download functionality (if supported by browser)
+        function downloadAsPDF() {
+            window.print();
+        }
+    </script>
+</body>
+</html>';
+    
+    return $html;
+}
+
+// If called directly with ?id=, generate and display the receipt
+if (isset($_GET['id'])) {
+    $id = (int)$_GET['id'];
+    generate_receipt_professional($id, false);
+    exit;
+}
+?>
