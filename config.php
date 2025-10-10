@@ -5,7 +5,7 @@ session_start();
 $db_host = 'localhost';
 $db_user = 'root';
 $db_pass = '';
-$db_name = 'pet_care_db';
+$db_name = 'pets_db';
 
 $mysqli = new mysqli($db_host, $db_user, $db_pass, $db_name);
 if ($mysqli->connect_error) {

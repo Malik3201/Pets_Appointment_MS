@@ -1,164 +1,288 @@
-<?php include 'includes/header.php'; ?>
+<?php
+// Set page title for header
+$page_title = 'Pets Care - Professional Veterinary Care';
+require __DIR__ . '/partials/header.php';
+?>
 
-<section class="hero">
-	<div class="hero-blob"></div>
-	<div class="container hero-inner">
-		<div class="hero-copy">
-			<h1>Welcome to Pet Care Management System</h1>
-			<p>Book appointments, register your pets, and manage care with ease.</p>
+<!-- Hero Section with Local Background Video -->
+<section class="hero" data-bg="assets/bgVideo/Hero-bg-video.mp4">
+    <!-- Local Video Background -->
+    <video class="hero-video-bg" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+        <source src="assets/bgVideo/Hero-bg-video.mp4" type="video/mp4">
+        <!-- Fallback image if video doesn't load -->
+        <div class="hero-fallback" style="background-image: url('https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+        Your browser does not support the video tag.
+    </video>
+    
+    <div class="hero-content">
+        <h1>Trusted Veterinary Care for Your Beloved Pets</h1>
+        <p>Professional medical services, compassionate care, and state-of-the-art facilities to keep your pets healthy and happy.</p>
 			<div class="cta-group">
-				<a class="btn" href="book_appointment.php">Book Appointment</a>
-				<a class="btn" href="register_pet.php" style="background:#8c3bd6">Register Pet</a>
-			</div>
-		</div>
-		<div class="hero-visual">
-			<img src="https://pngimg.com/uploads/dog/dog_PNG50375.png" alt="Happy dog" loading="lazy" style="width:85%; margin:0 auto; filter: drop-shadow(0 22px 40px rgba(0,0,0,.18)); transform: rotate(4deg);" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,\
-<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%23d7b9d7\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23520a9b\' font-family=\'Poppins, Arial\' font-size=\'28\'>Dog image</text></svg>'">
+            <a href="book_appointment.php" class="btn btn--primary">Book Appointment</a>
+            <a href="#services" class="btn btn--white">Explore Services</a>
 		</div>
 	</div>
 </section>
 
-<section class="sections container">
-	<div class="section-row">
-		<div class="content-card reveal">
-			<h3>Register your pet easily</h3>
-			<p>Create a profile for your furry friend in minutes and keep important details handy.</p>
-		</div>
-		<div class="pet-image-wrap">
-			<img class="pet-image" src="https://pngimg.com/uploads/cat/cat_PNG50498.png" alt="Cat" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,\
-<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'500\' height=\'350\'><rect width=\'100%\' height=\'100%\' fill=\'%23d7b9d7\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23520a9b\' font-family=\'Poppins, Arial\' font-size=\'24\'>Cat image</text></svg>'">
-		</div>
+<!-- About Our Clinics Section -->
+<section class="section" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+    <div class="container">
+        <div class="section-content">
+            <div class="section-header">
+                <h2 class="section-title">About Our Clinics</h2>
+                <p class="section-subtitle">Providing comprehensive veterinary care with state-of-the-art facilities and experienced professionals dedicated to your pet's health and wellbeing.</p>
 	</div>
 
-	<div class="section-row reverse">
-		<div class="content-card reveal">
-			<h3>Book appointments online</h3>
-			<p>Choose preferred dates and times for grooming, vaccination, and checkups.</p>
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">25+</span>
+                    <span class="stat-label">Years of Experience</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">15</span>
+                    <span class="stat-label">Certified Specialists</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">8</span>
+                    <span class="stat-label">Medical Departments</span>
 		</div>
-		<div class="pet-image-wrap">
-			<img class="pet-image" src="https://pngimg.com/uploads/rabbit/rabbit_PNG3789.png" alt="Rabbit" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,\
-<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'500\' height=\'350\'><rect width=\'100%\' height=\'100%\' fill=\'%23d7b9d7\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23520a9b\' font-family=\'Poppins, Arial\' font-size=\'24\'>Rabbit image</text></svg>'">
+                <div class="stat-card">
+                    <span class="stat-number">5</span>
+                    <span class="stat-label">Branch Locations</span>
 		</div>
 	</div>
-
-	<div class="section-row">
-		<div class="content-card reveal">
-			<h3>Track your visits</h3>
-			<p>View past and upcoming appointments to stay on top of your pet's health.</p>
-		</div>
-		<div class="pet-image-wrap">
-			<img class="pet-image" src="https://png.pngtree.com/png-vector/20250512/ourmid/pngtree-green-parrot-with-red-beak-png-image_16222303.png" alt="Parrot" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,\
-<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'500\' height=\'350\'><rect width=\'100%\' height=\'100%\' fill=\'%23d7b9d7\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23520a9b\' font-family=\'Poppins, Arial\' font-size=\'24\'>Parrot image</text></svg>'">
 		</div>
 	</div>
 </section>
 
-<!-- Additional Static Sections -->
-<section class="container section-block">
+<!-- Services Grid Section -->
+<section class="section" id="services" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+    <div class="container">
+        <div class="section-content">
+            <div class="section-header">
 	<h2 class="section-title">Our Services</h2>
-	<div class="cards-grid">
-		<div class="service-card">
-			<h3>General Checkups</h3>
-			<p>Routine health exams to keep your pet happy and healthy.</p>
+                <p class="section-subtitle">Comprehensive veterinary care covering all aspects of your pet's health, from routine checkups to specialized treatments.</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card red-frame">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3>Wellness Exam</h3>
+                    <p>Comprehensive health checkups to ensure your pet is in optimal condition with preventive care and early detection.</p>
+                    <a href="#" class="btn btn--ghost">Explore More</a>
+                </div>
+                
+                <div class="service-card red-frame">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Grooming</h3>
+                    <p>Professional grooming services including bathing, nail trimming, and styling to keep your pet looking and feeling great.</p>
+                    <a href="#" class="btn btn--ghost">Explore More</a>
+                </div>
+                
+                <div class="service-card red-frame">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                        </svg>
 		</div>
-		<div class="service-card">
 			<h3>Vaccinations</h3>
-			<p>Up-to-date shots to protect against common diseases.</p>
+                    <p>Essential vaccinations to protect your pet from common diseases and maintain their long-term health and immunity.</p>
+                    <a href="#" class="btn btn--ghost">Explore More</a>
+                </div>
+                
+                <div class="service-card red-frame">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                        </svg>
+                    </div>
+                    <h3>Laboratory</h3>
+                    <p>Advanced diagnostic testing and laboratory services for accurate diagnosis and monitoring of your pet's health conditions.</p>
+                    <a href="#" class="btn btn--ghost">Explore More</a>
+                </div>
+                
+                <div class="service-card red-frame">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                        </svg>
+                    </div>
+                    <h3>Dentistry</h3>
+                    <p>Professional dental care including cleanings, extractions, and oral health treatments to maintain your pet's dental hygiene.</p>
+                    <a href="#" class="btn btn--ghost">Explore More</a>
+                </div>
+                
+                <div class="service-card red-frame">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Surgery</h3>
+                    <p>Advanced surgical procedures performed by experienced veterinarians in our state-of-the-art operating facilities.</p>
+                    <a href="#" class="btn btn--ghost">Explore More</a>
 		</div>
-		<div class="service-card">
-			<h3>Grooming</h3>
-			<p>Bathing, trimming, nail care, and a little pampering.</p>
 		</div>
-		<div class="service-card">
-			<h3>Emergency Care</h3>
-			<p>Prompt attention for urgent issues when the unexpected happens.</p>
-		</div>
-	</div>
-</section>
-
-<section class="container section-block">
-	<h2 class="section-title">How It Works</h2>
-	<ol class="steps">
-		<li>
-			<h4>Register Your Pet</h4>
-			<p>Add your pet's basic info so we can personalize care.</p>
-		</li>
-		<li>
-			<h4>Book an Appointment</h4>
-			<p>Pick a date and time that fits your schedule.</p>
-		</li>
-		<li>
-			<h4>Visit and Relax</h4>
-			<p>We’ll take care of everything during your appointment.</p>
-		</li>
-	</ol>
-</section>
-
-<section class="container section-block">
-	<h2 class="section-title">Why Choose Us</h2>
-	<div class="features-grid">
-		<div class="feature">
-			<h4>Certified Vets</h4>
-			<p>Experienced professionals with compassionate care.</p>
-		</div>
-		<div class="feature">
-			<h4>Modern Facilities</h4>
-			<p>Clean, safe, and fully equipped for your pet.</p>
-		</div>
-		<div class="feature">
-			<h4>Easy Scheduling</h4>
-			<p>Simple online booking and reminders.</p>
-		</div>
-		<div class="feature">
-			<h4>Affordable Plans</h4>
-			<p>Transparent pricing with flexible options.</p>
 		</div>
 	</div>
 </section>
 
-<section class="container section-block">
-	<h2 class="section-title">Testimonials</h2>
-	<div class="testimonials">
-		<blockquote class="testimonial">
-			<p>“Booking was seamless and the staff was so friendly!”</p>
-			<cite>— Priya & Bruno</cite>
-		</blockquote>
-		<blockquote class="testimonial">
-			<p>“They treated our cat like family. Highly recommend.”</p>
-			<cite>— Mitesh & Snowy</cite>
-		</blockquote>
-		<blockquote class="testimonial">
-			<p>“Great care, fair prices, and easy follow-ups.”</p>
-			<cite>— Aisha & Coco</cite>
-		</blockquote>
+<!-- Testimonials Section -->
+<section class="section" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+    <div class="container">
+        <div class="section-content">
+            <div class="section-header">
+                <h2 class="section-title">What Our Clients Say</h2>
+                <p class="section-subtitle">Hear from pet owners who trust us with their beloved companions' health and wellbeing.</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <p>The staff at Pets & Vets treated my dog Max with such care and compassion. The facility is clean, modern, and the veterinarians are highly knowledgeable. I couldn't ask for better care for my furry family member.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SM</div>
+                        <div class="testimonial-info">
+                            <h4>Sarah Mitchell</h4>
+                            <p>Owner of Max (Golden Retriever)</p>
+                            <div class="testimonial-stars">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <p>When my cat Luna needed emergency surgery, the team at Pets & Vets was incredible. They explained everything clearly, kept me updated throughout the process, and Luna made a full recovery. I'm so grateful for their expertise and care.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">DJ</div>
+                        <div class="testimonial-info">
+                            <h4>David Johnson</h4>
+                            <p>Owner of Luna (Persian Cat)</p>
+                            <div class="testimonial-stars">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <p>The grooming services here are outstanding. My dog Charlie always looks and smells amazing after his visits. The staff is gentle, patient, and truly cares about the animals. Highly recommend to all pet owners!</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">RW</div>
+                        <div class="testimonial-info">
+                            <h4>Rachel Williams</h4>
+                            <p>Owner of Charlie (Poodle)</p>
+                            <div class="testimonial-stars">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                        </div>
+		</div>
+		</div>
+		</div>
+		</div>
 	</div>
 </section>
 
-<section class="partners-strip">
-	<div class="container partners-inner">
-		<span class="partner">PetFoodCo</span>
-		<span class="partner">CarePlus</span>
-		<span class="partner">PawsLab</span>
-		<span class="partner">HappyPets</span>
+<!-- Branches Map Section -->
+<section class="section" id="branches" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+    <div class="container">
+        <div class="section-content">
+            <div class="section-header">
+                <h2 class="section-title">Our Branches</h2>
+                <p class="section-subtitle">Conveniently located veterinary clinics across the city, each equipped with modern facilities and experienced staff.</p>
+            </div>
+            
+            <div class="branches-grid">
+                <div class="branch-card red-frame">
+                    <div class="branch-map">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <span>Interactive Map</span>
+                    </div>
+                    <div class="branch-info">
+                        <h3>Downtown Clinic</h3>
+                        <p>Our flagship location in the heart of the city, offering comprehensive veterinary services with extended hours and emergency care.</p>
+                        <a href="#" class="btn btn--ghost">Explore More</a>
+                    </div>
+	</div>
+                
+                <div class="branch-card red-frame">
+                    <div class="branch-map">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <span>Interactive Map</span>
+                    </div>
+                    <div class="branch-info">
+                        <h3>Westside Branch</h3>
+                        <p>Conveniently located in the west district, specializing in routine care, grooming, and preventive medicine services.</p>
+                        <a href="#" class="btn btn--ghost">Explore More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 	</div>
 </section>
 
-<section class="cta-banner">
-	<div class="container cta-inner">
-		<h2>Ready to give your pet the best care?</h2>
-		<a class="btn" href="book_appointment.php">Book an Appointment</a>
+<!-- CTA Section -->
+<section class="cta-section" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+    <div class="container">
+        <h2>Trusted Care Across Our Branches</h2>
+        <p>Join thousands of pet owners who trust us with their beloved companions' health and wellbeing.</p>
+        <a href="book_appointment.php" class="btn btn--white">Book Your Appointment Today</a>
 	</div>
 </section>
 
-<script>
-const observer = new IntersectionObserver((entries) => {
-	entries.forEach(entry => {
-		if (entry.isIntersecting) { entry.target.classList.add('is-visible'); }
-	});
-}, { threshold: 0.2 });
-
-document.querySelectorAll('.content-card').forEach(el => observer.observe(el));
-</script>
-
-<?php include 'includes/footer.php'; ?>
-
+<?php require __DIR__ . '/partials/footer.php'; ?>
