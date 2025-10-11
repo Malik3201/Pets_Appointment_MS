@@ -1,6 +1,27 @@
 <?php
-// Set page title for header
-$page_title = 'Pets Care - Professional Veterinary Care';
+/**
+ * PETS APPOINTMENT MANAGEMENT SYSTEM - HOME PAGE
+ * 
+ * This is the main landing page for the Canberra Pets Care Hospital website.
+ * It showcases the veterinary clinic's services, features, and provides
+ * navigation to key functionality like pet registration and appointment booking.
+ * 
+ * Features:
+ * - Hero section with background video
+ * - About our clinics section
+ * - Services overview
+ * - Testimonials
+ * - Branch locations
+ * - Call-to-action sections
+ * 
+ * @author: Student Project
+ * @version: 1.0
+ */
+
+// Set the page title that will be displayed in the browser tab
+$page_title = 'Canberra Pets Care Hospital - Professional Veterinary Care';
+
+// Include the header partial which contains HTML head, navigation, and opening body tag
 require __DIR__ . '/partials/header.php';
 ?>
 
@@ -252,8 +273,8 @@ require __DIR__ . '/partials/header.php';
                         <span>Interactive Map</span>
                     </div>
                     <div class="branch-info">
-                        <h3>Downtown Clinic</h3>
-                        <p>Our flagship location in the heart of the city, offering comprehensive veterinary services with extended hours and emergency care.</p>
+                        <h3>Canberra Central Clinic</h3>
+                        <p>Our flagship location in the heart of Canberra, offering comprehensive veterinary services with extended hours and emergency care.</p>
                         <a href="#" class="btn btn--ghost">Explore More</a>
                     </div>
 	</div>
@@ -266,8 +287,8 @@ require __DIR__ . '/partials/header.php';
                         <span>Interactive Map</span>
                     </div>
                     <div class="branch-info">
-                        <h3>Westside Branch</h3>
-                        <p>Conveniently located in the west district, specializing in routine care, grooming, and preventive medicine services.</p>
+                        <h3>Belconnen Branch</h3>
+                        <p>Conveniently located in Belconnen district, specializing in routine care, grooming, and preventive medicine services.</p>
                         <a href="#" class="btn btn--ghost">Explore More</a>
                     </div>
                 </div>

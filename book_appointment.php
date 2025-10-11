@@ -90,7 +90,7 @@ if (isset($_POST['submit_booking'])) {
                                 </div>
                                 <div class="form-group">
                                     <label for="owner_phone">Phone Number</label>
-                                    <input type="tel" id="owner_phone" name="owner_phone" value="<?php echo $owner_phone; ?>" placeholder="+1 (234) 567-8900">
+                                    <input type="tel" id="owner_phone" name="owner_phone" value="<?php echo $owner_phone; ?>" placeholder="+61 2 3456 7890">
                                 </div>
                             </div>
                         </div>

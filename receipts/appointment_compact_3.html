@@ -1,56 +1,4 @@
-<?php
-// Ultra-Compact Professional Receipt Generator
-// Single page with only essential fields
-// Usage: generate_receipt_compact($appointment_id, $saveToFile = true)
-
-require_once __DIR__ . '/config.php';
-
-function generate_receipt_compact($appointment_id, $saveToFile = true) {
-    global $mysqli;
-    $appointment_id = (int)$appointment_id;
-    
-    // Get appointment details with owner information
-    $stmt = $mysqli->prepare('SELECT a.id, a.date, a.time, a.service, a.status, p.pet_name, p.type, p.age, o.owner_name, o.email, o.phone, o.address FROM appointments a JOIN pets p ON a.pet_id = p.id JOIN owners o ON p.owner_id = o.id WHERE a.id = ? LIMIT 1');
-    $stmt->bind_param('i', $appointment_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $data = $result->fetch_assoc();
-    $stmt->close();
-    
-    if (!$data) { 
-        return false; 
-    }
-    
-    // Generate HTML receipt
-    $html = generate_receipt_html_compact($data);
-    
-    // Create receipts directory if it doesn't exist
-    $receiptsDir = __DIR__ . '/receipts';
-    if (!is_dir($receiptsDir)) { 
-        mkdir($receiptsDir, 0777, true); 
-    }
-    
-    $htmlFilePath = $receiptsDir . '/appointment_compact_' . $appointment_id . '.html';
-    
-    // Save HTML file
-    file_put_contents($htmlFilePath, $html);
-    
-    if ($saveToFile) {
-        return $htmlFilePath; // Return HTML file path for download
-    } else {
-        // Output HTML for direct viewing
-        header('Content-Type: text/html; charset=utf-8');
-        echo $html;
-        return true;
-    }
-}
-
-function generate_receipt_html_compact($data) {
-    $receiptNumber = 'APT-' . str_pad($data['id'], 6, '0', STR_PAD_LEFT);
-    $appointmentDate = date('M j, Y', strtotime($data['date']));
-    $appointmentTime = date('g:i A', strtotime($data['time']));
-    
-    $html = '<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -223,7 +171,7 @@ function generate_receipt_html_compact($data) {
         <!-- Receipt Title -->
         <div class="receipt-title">
             <h2>Appointment Receipt</h2>
-            <div class="receipt-number">#' . $receiptNumber . '</div>
+            <div class="receipt-number">#APT-000003</div>
         </div>
         
         <!-- Content -->
@@ -231,35 +179,35 @@ function generate_receipt_html_compact($data) {
             <div class="info-grid">
                 <div class="info-item">
                     <div class="info-label">Date</div>
-                    <div class="info-value">' . $appointmentDate . '</div>
+                    <div class="info-value">Oct 16, 2025</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Time</div>
-                    <div class="info-value">' . $appointmentTime . '</div>
+                    <div class="info-value">10:27 PM</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Service</div>
-                    <div class="info-value">' . htmlspecialchars($data['service']) . '</div>
+                    <div class="info-value">Surgery</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Pet Name</div>
-                    <div class="info-value">' . htmlspecialchars($data['pet_name']) . '</div>
+                    <div class="info-value">dudu</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Type</div>
-                    <div class="info-value">' . htmlspecialchars($data['type']) . '</div>
+                    <div class="info-value">Dog</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Age</div>
-                    <div class="info-value">' . $data['age'] . ' years</div>
+                    <div class="info-value">2 years</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Owner Name</div>
-                    <div class="info-value">' . htmlspecialchars($data['owner_name']) . '</div>
+                    <div class="info-value">scan</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Email</div>
-                    <div class="info-value">' . htmlspecialchars($data['email']) . '</div>
+                    <div class="info-value">scan@gmail.com</div>
                 </div>
             </div>
         </div>
@@ -290,21 +238,4 @@ function generate_receipt_html_compact($data) {
         console.log("Compact receipt loaded. Press Ctrl+P to print or wait for auto-print.");
     </script>
 </body>
-</html>';
-    
-    return $html;
-}
-
-// Only run this code if the script is accessed directly via URL
-if (basename($_SERVER['PHP_SELF']) === 'generate_receipt_professional.php') {
-    // Get appointment ID from URL parameter
-    $appointment_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-
-    if (!$appointment_id) {
-        die('Invalid appointment ID');
-    }
-
-    // Generate and output the receipt
-    generate_receipt_compact($appointment_id, false);
-}
-?>
+</html>

@@ -10,6 +10,7 @@ class VeterinaryWebsite {
     this.mobileMenu = null;
     this.preloadedImages = new Set();
     this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.previouslyFocusedElement = null;
     
     this.init();
   }
@@ -143,7 +144,6 @@ class VeterinaryWebsite {
     if (!toggle || !drawer) return;
 
     let isOpen = false;
-    let previouslyFocusedElement = null;
 
     // Toggle menu
     toggle.addEventListener('click', () => {
@@ -187,7 +187,7 @@ class VeterinaryWebsite {
 
     if (isOpen) {
       // Store currently focused element
-      previouslyFocusedElement = document.activeElement;
+      this.previouslyFocusedElement = document.activeElement;
       
       // Focus first link in drawer
       const firstLink = drawer.querySelector('a');
@@ -208,9 +208,9 @@ class VeterinaryWebsite {
       this.setInert(false);
       
       // Restore focus to previously focused element
-      if (previouslyFocusedElement) {
-        previouslyFocusedElement.focus();
-        previouslyFocusedElement = null;
+      if (this.previouslyFocusedElement) {
+        this.previouslyFocusedElement.focus();
+        this.previouslyFocusedElement = null;
       }
     }
   }

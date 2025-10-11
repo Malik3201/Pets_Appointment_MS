@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
 		<div class="form-group">
                                 <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" name="phone" placeholder="+1 (234) 567-8900">
+                                <input type="tel" id="phone" name="phone" placeholder="+61 2 3456 7890">
 		</div>
 		<div class="form-group">
                                 <label>&nbsp;</label>
@@ -123,12 +123,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     
                                     <div class="appointment-footer">
 							<?php if ($a['status'] === 'Approved'): ?>
-                                            <a href="generate_receipt.php?id=<?php echo $a['id']; ?>" target="_blank" class="btn btn--ghost btn--small">
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-                                                </svg>
-                                                Download Receipt
-                                            </a>
+                                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                                <a href="generate_receipt_professional.php?id=<?php echo $a['id']; ?>" target="_blank" class="btn btn--ghost btn--small" style="flex: 1; min-width: 120px;">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                                    </svg>
+                                                    Download Receipt
+                                                </a>
+                                                <a href="generate_receipt.php?id=<?php echo $a['id']; ?>" target="_blank" class="btn btn--ghost btn--small" style="flex: 1; min-width: 120px;">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                                    </svg>
+                                                    Detailed Receipt
+                                                </a>
+                                            </div>
 								<?php else: ?>
                                             <span class="approval-info">Waiting for admin approval</span>
 								<?php endif; ?>

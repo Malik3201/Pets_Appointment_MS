@@ -449,11 +449,12 @@ function generate_receipt_html_professional($data) {
             <p><strong>This receipt is valid for approved appointments only.</strong></p>
             
             <div class="contact-info">
-                <p class="main-contact">Pets Care - Professional Veterinary Services</p>
-                <p>📧 Email: info@petscare.com</p>
-                <p>📞 Phone: (555) 123-4567</p>
-                <p>🌐 Website: www.petscare.com</p>
-                <p>© 2025 Pets Care. All Rights Reserved.</p>
+                <p class="main-contact">Canberra Pets Care Hospital - Professional Veterinary Services</p>
+                <p>📧 Email: info@petscare.com.au</p>
+                <p>📞 Phone: +61 2 3456 7890</p>
+                <p>🌐 Website: www.petscare.com.au</p>
+                <p>📍 Address: 123 Veterinary Street, Canberra, ACT 2600</p>
+                <p>© 2025 Canberra Pets Care Hospital. All Rights Reserved.</p>
             </div>
         </div>
     </div>
@@ -481,13 +482,16 @@ function generate_receipt_html_professional($data) {
     return $html;
 }
 
-// Get appointment ID from URL parameter
-$appointment_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+// Only run this code if the script is accessed directly via URL
+if (basename($_SERVER['PHP_SELF']) === 'generate_receipt.php') {
+    // Get appointment ID from URL parameter
+    $appointment_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-if (!$appointment_id) {
-    die('Invalid appointment ID');
+    if (!$appointment_id) {
+        die('Invalid appointment ID');
+    }
+
+    // Generate and output the receipt
+    generate_receipt_professional($appointment_id, false);
 }
-
-// Generate and output the receipt
-generate_receipt_professional($appointment_id, false);
 ?>
