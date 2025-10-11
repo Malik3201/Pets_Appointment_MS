@@ -1,16 +1,37 @@
 <?php
-// Set page title for header
-$page_title = 'Pets Care - Professional Veterinary Care';
+/**
+ * PETS APPOINTMENT MANAGEMENT SYSTEM - HOME PAGE
+ * 
+ * This is the main landing page for the Canberra Pets Care Hospital website.
+ * It showcases the veterinary clinic's services, features, and provides
+ * navigation to key functionality like pet registration and appointment booking.
+ * 
+ * Features:
+ * - Hero section with background video
+ * - About our clinics section
+ * - Services overview
+ * - Testimonials
+ * - Branch locations
+ * - Call-to-action sections
+ * 
+ * @author: Student Project
+ * @version: 1.0
+ */
+
+// Set the page title that will be displayed in the browser tab
+$page_title = 'Canberra Pets Care Hospital - Professional Veterinary Care';
+
+// Include the header partial which contains HTML head, navigation, and opening body tag
 require __DIR__ . '/partials/header.php';
 ?>
 
 <!-- Hero Section with Local Background Video -->
 <section class="hero" data-bg="assets/bgVideo/Hero-bg-video.mp4">
     <!-- Local Video Background -->
-    <video class="hero-video-bg" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+    <video class="hero-video-bg" autoplay muted loop playsinline poster="assets/bgVideo/main_bg.jpg">
         <source src="assets/bgVideo/Hero-bg-video.mp4" type="video/mp4">
         <!-- Fallback image if video doesn't load -->
-        <div class="hero-fallback" style="background-image: url('https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+        <div class="hero-fallback" style="background-image: url('assets/bgVideo/main_bg.jpg');"></div>
         Your browser does not support the video tag.
     </video>
     
@@ -25,7 +46,7 @@ require __DIR__ . '/partials/header.php';
 </section>
 
 <!-- About Our Clinics Section -->
-<section class="section" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="section" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <div class="section-content">
             <div class="section-header">
@@ -57,7 +78,7 @@ require __DIR__ . '/partials/header.php';
 </section>
 
 <!-- Services Grid Section -->
-<section class="section" id="services" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="section" id="services" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <div class="section-content">
             <div class="section-header">
@@ -137,7 +158,7 @@ require __DIR__ . '/partials/header.php';
 </section>
 
 <!-- Testimonials Section -->
-<section class="section" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="section" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <div class="section-content">
             <div class="section-header">
@@ -235,7 +256,7 @@ require __DIR__ . '/partials/header.php';
 </section>
 
 <!-- Branches Map Section -->
-<section class="section" id="branches" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="section" id="branches" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <div class="section-content">
             <div class="section-header">
@@ -252,8 +273,8 @@ require __DIR__ . '/partials/header.php';
                         <span>Interactive Map</span>
                     </div>
                     <div class="branch-info">
-                        <h3>Downtown Clinic</h3>
-                        <p>Our flagship location in the heart of the city, offering comprehensive veterinary services with extended hours and emergency care.</p>
+                        <h3>Canberra Central Clinic</h3>
+                        <p>Our flagship location in the heart of Canberra, offering comprehensive veterinary services with extended hours and emergency care.</p>
                         <a href="#" class="btn btn--ghost">Explore More</a>
                     </div>
 	</div>
@@ -266,8 +287,8 @@ require __DIR__ . '/partials/header.php';
                         <span>Interactive Map</span>
                     </div>
                     <div class="branch-info">
-                        <h3>Westside Branch</h3>
-                        <p>Conveniently located in the west district, specializing in routine care, grooming, and preventive medicine services.</p>
+                        <h3>Belconnen Branch</h3>
+                        <p>Conveniently located in Belconnen district, specializing in routine care, grooming, and preventive medicine services.</p>
                         <a href="#" class="btn btn--ghost">Explore More</a>
                     </div>
                 </div>
@@ -277,7 +298,7 @@ require __DIR__ . '/partials/header.php';
 </section>
 
 <!-- CTA Section -->
-<section class="cta-section" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="cta-section" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <h2>Trusted Care Across Our Branches</h2>
         <p>Join thousands of pet owners who trust us with their beloved companions' health and wellbeing.</p>

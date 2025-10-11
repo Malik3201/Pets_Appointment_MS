@@ -1,15 +1,52 @@
 <?php
-// Include configuration
+/**
+ * PETS APPOINTMENT MANAGEMENT SYSTEM - PET REGISTRATION PAGE
+ * 
+ * This page allows pet owners to register their pets in the system.
+ * It handles both owner and pet information in a single form with
+ * database transactions to ensure data integrity.
+ * 
+ * Features:
+ * - Owner information collection (name, email, phone, address)
+ * - Pet information collection (name, type, age)
+ * - Database transaction handling for data consistency
+ * - Input validation and sanitization
+ * - Success/error message display
+ * - Form validation with JavaScript
+ * 
+ * Database Operations:
+ * - Checks if owner already exists by email
+ * - Creates new owner record if not exists
+ * - Creates pet record linked to owner
+ * - Uses transactions to ensure data consistency
+ * 
+ * @author: Student Project
+ * @version: 1.0
+ */
+
+// Include the main configuration file for database connection
 require_once __DIR__ . '/config.php';
 
-// Set page title for header
-$page_title = 'Register Pet - Pets Care';
+// Set the page title for the browser tab
+$page_title = 'Register Pet - Canberra Pets Care Hospital';
+
+// Include the header partial with navigation
 require __DIR__ . '/partials/header.php';
 ?>
 
 <?php
+/**
+ * FORM PROCESSING LOGIC
+ * 
+ * This section handles the POST request when the user submits the pet registration form.
+ * It processes both owner and pet information, ensuring data integrity through
+ * database transactions.
+ */
 $message = '';
+
+// Check if the form was submitted via POST method
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	// Sanitize and validate all form inputs
 	$owner_name = sanitize($_POST['owner_name'] ?? '');
 	$email = sanitize($_POST['email'] ?? '');
 	$phone = sanitize($_POST['phone'] ?? '');
@@ -18,11 +55,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$type = sanitize($_POST['type'] ?? '');
 	$age = (int)($_POST['age'] ?? 0);
 
+	// Validate that all required fields are provided and age is non-negative
 	if ($owner_name && $email && $phone && $address && $pet_name && $type && $age >= 0) {
-		// Upsert owner by email (assumption: unique email)
+		// Begin database transaction to ensure data consistency
+		// This ensures that either both owner and pet are created, or neither is created
 		$mysqli->begin_transaction();
 		try {
-			// Check if owner exists
+			// Check if owner already exists in the database by email
+			// This prevents duplicate owner records for the same email address
 			$owner_id = null;
 			$stmt = $mysqli->prepare('SELECT id FROM owners WHERE email = ? LIMIT 1');
 			$stmt->bind_param('s', $email);
@@ -33,21 +73,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			}
 			$stmt->close();
 
+			// If owner doesn't exist, create a new owner record
 			if ($owner_id === null) {
 				$stmt = $mysqli->prepare('INSERT INTO owners (owner_name, email, phone, address) VALUES (?, ?, ?, ?)');
 				$stmt->bind_param('ssss', $owner_name, $email, $phone, $address);
 				$stmt->execute();
-				$owner_id = $stmt->insert_id;
+				$owner_id = $stmt->insert_id; // Get the ID of the newly created owner
 				$stmt->close();
 			} else {
-				// Optionally update owner details
+				// If owner exists, update their information with the latest details
 				$stmt = $mysqli->prepare('UPDATE owners SET owner_name = ?, phone = ?, address = ? WHERE id = ?');
 				$stmt->bind_param('sssi', $owner_name, $phone, $address, $owner_id);
 				$stmt->execute();
 				$stmt->close();
 			}
 
-			// Insert pet
+			// Create a new pet record linked to the owner
 			$stmt = $mysqli->prepare('INSERT INTO pets (pet_name, type, age, owner_id) VALUES (?, ?, ?, ?)');
 			$stmt->bind_param('ssii', $pet_name, $type, $age, $owner_id);
 			$stmt->execute();
@@ -66,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <!-- Register Pet Section -->
-<section class="section" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="section" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <div class="section-content">
             <div class="section-header">
@@ -101,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Phone Number *</label>
-                                    <input type="tel" id="phone" name="phone" required placeholder="+1 (234) 567-8900">
+                                    <input type="tel" id="phone" name="phone" required placeholder="+61 2 3456 7890">
                                 </div>
                                 <div class="form-group">
                                     <label for="address">Address *</label>
@@ -158,12 +199,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </section>
 
 <script>
+/**
+ * CLIENT-SIDE FORM VALIDATION
+ * 
+ * This JavaScript function validates the pet registration form before submission.
+ * It checks that all required fields are filled out to provide immediate
+ * feedback to users and prevent unnecessary server requests.
+ * 
+ * @returns {boolean} - Returns true if all fields are valid, false otherwise
+ */
 function validateRegisterPet() {
+	// Array of required field IDs that must be filled
 	var requiredIds = ['owner_name','email','phone','address','pet_name','type','age'];
+	
+	// Loop through each required field and check if it has a value
 	for (var i=0;i<requiredIds.length;i++) {
 		var el = document.getElementById(requiredIds[i]);
-		if (!el || !el.value.trim()) { alert('Please fill all fields.'); return false; }
+		// Check if element exists and has a non-empty value (after trimming whitespace)
+		if (!el || !el.value.trim()) { 
+			alert('Please fill all fields.'); 
+			return false; 
+		}
 	}
+	
+	// If all validations pass, return true to allow form submission
 	return true;
 }
 </script>

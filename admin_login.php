@@ -2,18 +2,15 @@
 // Include configuration
 require_once __DIR__ . '/config.php';
 
-// Set page title for header
-$page_title = 'Admin Login - Pets Care';
-require __DIR__ . '/partials/header.php';
-?>
-
-<?php
 $message = '';
+
+// Check if admin is already logged in
 if (isset($_SESSION['admin_id'])) {
 	header('Location: admin_dashboard.php');
 	exit;
 }
 
+// Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$username = sanitize($_POST['username'] ?? '');
 	$password = $_POST['password'] ?? '';
@@ -38,6 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$message = 'Please enter username and password.';
 	}
 }
+
+// Set page title for header
+$page_title = 'Admin Login - Pets Care';
+require __DIR__ . '/partials/header.php';
 ?>
 
 <!-- Admin Login Section -->

@@ -59,7 +59,7 @@ if (isset($_POST['submit_booking'])) {
 ?>
 
 <!-- Book Appointment Section -->
-<section class="section" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="section" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <div class="section-content">
             <div class="section-header">
@@ -90,7 +90,7 @@ if (isset($_POST['submit_booking'])) {
                                 </div>
                                 <div class="form-group">
                                     <label for="owner_phone">Phone Number</label>
-                                    <input type="tel" id="owner_phone" name="owner_phone" value="<?php echo $owner_phone; ?>" placeholder="+1 (234) 567-8900">
+                                    <input type="tel" id="owner_phone" name="owner_phone" value="<?php echo $owner_phone; ?>" placeholder="+61 2 3456 7890">
                                 </div>
                             </div>
                         </div>

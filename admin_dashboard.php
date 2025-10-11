@@ -8,19 +8,19 @@ if (!isset($_SESSION['admin_id'])) {
 	exit;
 }
 
-// Set page title for header
-$page_title = 'Admin Dashboard - Pets Care';
-require __DIR__ . '/partials/header.php';
-?>
-
-<?php
-// Handle logout
+// Handle logout BEFORE any output
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 	session_destroy();
 	header('Location: admin_login.php');
 	exit;
 }
 
+// Set page title for header
+$page_title = 'Admin Dashboard - Pets Care';
+require __DIR__ . '/partials/header.php';
+?>
+
+<?php
 // Simple action router for CRUD operations
 $tab = $_GET['tab'] ?? 'appointments';
 $message = '';
@@ -61,8 +61,16 @@ if (isset($_POST['update_status'])) {
 	$message = 'Appointment status updated.';
 	// If approved, generate receipt
 	if ($status === 'Approved') {
-		require_once __DIR__ . '/generate_receipt.php';
-		generate_receipt_pdf($id, true);
+		try {
+			require_once __DIR__ . '/generate_receipt.php';
+			$receiptPath = generate_receipt_professional($id, true);
+			if ($receiptPath) {
+				$message = 'Appointment status updated and receipt generated.';
+			}
+		} catch (Exception $e) {
+			// Receipt generation failed, but appointment was still updated
+			$message = 'Appointment status updated (receipt generation failed).';
+		}
 	}
 }
 
@@ -432,14 +440,28 @@ $appointments = $mysqli->query('SELECT a.*, p.pet_name, o.owner_name FROM appoin
 					</form>
 				</td>
                                     <td class="actions-cell">
-                                        <a href="?tab=appointments&type=appointment&delete=<?php echo $a['id']; ?>" 
-                                           onclick="return confirm('Delete appointment?');" 
-                                           class="btn btn--small btn--danger">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                                            </svg>
-                                            Delete
-                                        </a>
+                                        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                            <?php if ($a['status'] === 'Approved'): ?>
+                                                <a href="generate_receipt_professional.php?id=<?php echo $a['id']; ?>" 
+                                                   target="_blank" 
+                                                   class="btn btn--small btn--ghost" 
+                                                   style="flex: 1; min-width: 80px; font-size: 11px;">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                                    </svg>
+                                                    Receipt
+                                                </a>
+                                            <?php endif; ?>
+                                            <a href="?tab=appointments&type=appointment&delete=<?php echo $a['id']; ?>" 
+                                               onclick="return confirm('Delete appointment?');" 
+                                               class="btn btn--small btn--danger"
+                                               style="flex: 1; min-width: 80px; font-size: 11px;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                                                </svg>
+                                                Delete
+                                            </a>
+                                        </div>
 				</td>
 			</tr>
 			<?php endwhile; ?>
