@@ -1,81 +1,4 @@
-<?php
-// Professional PDF Receipt Generator
-// This script creates a professional receipt using HTML to PDF conversion
-// Usage: generate_receipt_professional($appointment_id, $saveToFile = true)
-
-require_once __DIR__ . '/config.php';
-
-function generate_receipt_professional($appointment_id, $saveToFile = true) {
-	global $mysqli;
-	$appointment_id = (int)$appointment_id;
-    
-    // Get appointment details with owner information
-    $stmt = $mysqli->prepare('SELECT a.id, a.date, a.time, a.service, a.status, p.pet_name, p.type, p.age, o.owner_name, o.email, o.phone, o.address FROM appointments a JOIN pets p ON a.pet_id = p.id JOIN owners o ON p.owner_id = o.id WHERE a.id = ? LIMIT 1');
-	$stmt->bind_param('i', $appointment_id);
-	$stmt->execute();
-	$result = $stmt->get_result();
-	$data = $result->fetch_assoc();
-	$stmt->close();
-    
-    if (!$data) { 
-        return false; 
-    }
-    
-    // Generate HTML receipt
-    $html = generate_receipt_html_professional($data);
-    
-    // Create receipts directory if it doesn't exist
-	$receiptsDir = __DIR__ . '/receipts';
-    if (!is_dir($receiptsDir)) { 
-        mkdir($receiptsDir, 0777, true); 
-    }
-    
-    $htmlFilePath = $receiptsDir . '/appointment_' . $appointment_id . '.html';
-    $pdfFilePath = $receiptsDir . '/appointment_' . $appointment_id . '.pdf';
-    
-    // Save HTML file
-    file_put_contents($htmlFilePath, $html);
-    
-    // For now, we'll use a simple approach that works with most browsers
-    // The HTML file can be opened and printed as PDF
-	if ($saveToFile) {
-        return $htmlFilePath; // Return HTML file path for download
-	} else {
-        // Output HTML for direct viewing
-        header('Content-Type: text/html; charset=utf-8');
-        echo $html;
-		return true;
-	}
-}
-
-function generate_receipt_html_professional($data) {
-    $receiptNumber = 'APT-' . str_pad($data['id'], 6, '0', STR_PAD_LEFT);
-    $currentDate = date('M j, Y');
-    $appointmentDate = date('M j, Y', strtotime($data['date']));
-    $appointmentTime = date('g:i A', strtotime($data['time']));
-    
-    // Status styling
-    $statusColor = '';
-    $statusBg = '';
-    switch($data['status']) {
-        case 'Approved':
-            $statusColor = '#ffffff';
-            $statusBg = '#22c55e';
-            break;
-        case 'Pending':
-            $statusColor = '#ffffff';
-            $statusBg = '#f59e0b';
-            break;
-        case 'Cancelled':
-            $statusColor = '#ffffff';
-            $statusBg = '#ef4444';
-            break;
-        default:
-            $statusColor = '#ffffff';
-            $statusBg = '#6b7280';
-    }
-    
-    $html = '<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -122,7 +45,7 @@ function generate_receipt_html_professional($data) {
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
             opacity: 0.3;
         }
         
@@ -239,8 +162,8 @@ function generate_receipt_html_professional($data) {
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: ' . $statusColor . ';
-            background-color: ' . $statusBg . ';
+            color: #ffffff;
+            background-color: #22c55e;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
@@ -372,21 +295,21 @@ function generate_receipt_html_professional($data) {
                 <div class="info-grid">
                     <div class="info-item">
                         <span class="info-label">Receipt Number</span>
-                        <span class="info-value">' . $receiptNumber . '</span>
+                        <span class="info-value">APT-000002</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Date Issued</span>
-                        <span class="info-value">' . $currentDate . '</span>
+                        <span class="info-value">Oct 11, 2025</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Status</span>
                         <span class="info-value">
-                            <span class="status-badge">' . strtoupper($data['status']) . '</span>
+                            <span class="status-badge">APPROVED</span>
                         </span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Service Date</span>
-                        <span class="info-value">' . $appointmentDate . '</span>
+                        <span class="info-value">Oct 8, 2025</span>
                     </div>
                 </div>
             </div>
@@ -397,19 +320,19 @@ function generate_receipt_html_professional($data) {
                 <div class="info-grid">
                     <div class="info-item">
                         <span class="info-label">Pet Name</span>
-                        <span class="info-value">' . htmlspecialchars($data['pet_name']) . '</span>
+                        <span class="info-value">dudu</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Animal Type</span>
-                        <span class="info-value">' . htmlspecialchars($data['type']) . '</span>
+                        <span class="info-value">Dog</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Age</span>
-                        <span class="info-value">' . $data['age'] . ' years old</span>
+                        <span class="info-value">2 years old</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Service Requested</span>
-                        <span class="info-value">' . htmlspecialchars($data['service']) . '</span>
+                        <span class="info-value">Grooming</span>
                     </div>
                 </div>
             </div>
@@ -420,24 +343,24 @@ function generate_receipt_html_professional($data) {
                 <div class="info-grid">
                     <div class="info-item">
                         <span class="info-label">Owner Name</span>
-                        <span class="info-value">' . htmlspecialchars($data['owner_name']) . '</span>
+                        <span class="info-value">scan</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Phone Number</span>
-                        <span class="info-value">' . htmlspecialchars($data['phone']) . '</span>
+                        <span class="info-value">3257698027</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Email Address</span>
-                        <span class="info-value">' . htmlspecialchars($data['email']) . '</span>
+                        <span class="info-value">scan@gmail.com</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Appointment Time</span>
-                        <span class="info-value">' . $appointmentTime . '</span>
+                        <span class="info-value">10:22 PM</span>
                     </div>
                 </div>
                 <div class="address-item">
                     <span class="info-label">Full Address</span>
-                    <span class="info-value">' . htmlspecialchars($data['address']) . '</span>
+                    <span class="info-value">yr vyusgho oijs</span>
                 </div>
             </div>
         </div>
@@ -476,18 +399,4 @@ function generate_receipt_html_professional($data) {
         }
     </script>
 </body>
-</html>';
-    
-    return $html;
-}
-
-// Get appointment ID from URL parameter
-$appointment_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-
-if (!$appointment_id) {
-    die('Invalid appointment ID');
-}
-
-// Generate and output the receipt
-generate_receipt_professional($appointment_id, false);
-?>
+</html>

@@ -7,10 +7,10 @@ require __DIR__ . '/partials/header.php';
 <!-- Hero Section with Local Background Video -->
 <section class="hero" data-bg="assets/bgVideo/Hero-bg-video.mp4">
     <!-- Local Video Background -->
-    <video class="hero-video-bg" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+    <video class="hero-video-bg" autoplay muted loop playsinline poster="assets/bgVideo/main_bg.jpg">
         <source src="assets/bgVideo/Hero-bg-video.mp4" type="video/mp4">
         <!-- Fallback image if video doesn't load -->
-        <div class="hero-fallback" style="background-image: url('https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+        <div class="hero-fallback" style="background-image: url('assets/bgVideo/main_bg.jpg');"></div>
         Your browser does not support the video tag.
     </video>
     
@@ -25,7 +25,7 @@ require __DIR__ . '/partials/header.php';
 </section>
 
 <!-- About Our Clinics Section -->
-<section class="section" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="section" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <div class="section-content">
             <div class="section-header">
@@ -57,7 +57,7 @@ require __DIR__ . '/partials/header.php';
 </section>
 
 <!-- Services Grid Section -->
-<section class="section" id="services" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="section" id="services" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <div class="section-content">
             <div class="section-header">
@@ -137,7 +137,7 @@ require __DIR__ . '/partials/header.php';
 </section>
 
 <!-- Testimonials Section -->
-<section class="section" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="section" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <div class="section-content">
             <div class="section-header">
@@ -235,7 +235,7 @@ require __DIR__ . '/partials/header.php';
 </section>
 
 <!-- Branches Map Section -->
-<section class="section" id="branches" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="section" id="branches" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <div class="section-content">
             <div class="section-header">
@@ -277,7 +277,7 @@ require __DIR__ . '/partials/header.php';
 </section>
 
 <!-- CTA Section -->
-<section class="cta-section" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="cta-section" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <h2>Trusted Care Across Our Branches</h2>
         <p>Join thousands of pet owners who trust us with their beloved companions' health and wellbeing.</p>

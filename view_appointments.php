@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <!-- View Appointments Section -->
-<section class="section" data-bg="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+<section class="section" data-bg="assets/bgVideo/main_bg.jpg">
     <div class="container">
         <div class="section-content">
             <div class="section-header">
@@ -52,11 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="email">Email Address *</label>
                                 <input type="email" id="email" name="email" placeholder="your.email@example.com">
                             </div>
-                            <div class="form-group">
+		<div class="form-group">
                                 <label for="phone">Phone Number</label>
                                 <input type="tel" id="phone" name="phone" placeholder="+1 (234) 567-8900">
-                            </div>
-                            <div class="form-group">
+		</div>
+		<div class="form-group">
                                 <label>&nbsp;</label>
                                 <button type="submit" class="btn btn--primary">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -65,21 +65,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     Search Appointments
                                 </button>
                             </div>
-                        </div>
-                    </form>
+		</div>
+	</form>
                 </div>
 
-                <?php if ($message): ?>
+	<?php if ($message): ?>
                     <div class="alert <?php echo strpos($message, 'No appointments') === 0 ? 'alert-info' : 'alert-error'; ?>">
                         <?php echo $message; ?>
                     </div>
-                <?php endif; ?>
+	<?php endif; ?>
 
-                <?php if ($appointments): ?>
+	<?php if ($appointments): ?>
                     <div class="appointments-results">
                         <h3 class="results-title">Your Appointments</h3>
                         <div class="appointments-grid">
-                            <?php foreach ($appointments as $a): ?>
+				<?php foreach ($appointments as $a): ?>
                                 <div class="appointment-card">
                                     <div class="appointment-header">
                                         <h4 class="pet-name"><?php echo $a['pet_name']; ?></h4>
@@ -122,28 +122,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
                                     
                                     <div class="appointment-footer">
-                                        <?php if ($a['status'] === 'Approved'): ?>
-                                            <?php $receiptPath = 'receipts/appointment_' . $a['id'] . '.pdf'; ?>
-                                            <?php if (file_exists($receiptPath)): ?>
-                                                <a href="<?php echo $receiptPath; ?>" target="_blank" class="btn btn--ghost btn--small">
-                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-                                                    </svg>
-                                                    Download Receipt
-                                                </a>
-                                            <?php else: ?>
-                                                <span class="receipt-info">Receipt not generated yet</span>
-                                            <?php endif; ?>
-                                        <?php else: ?>
+							<?php if ($a['status'] === 'Approved'): ?>
+                                            <a href="generate_receipt.php?id=<?php echo $a['id']; ?>" target="_blank" class="btn btn--ghost btn--small">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                                </svg>
+                                                Download Receipt
+                                            </a>
+								<?php else: ?>
                                             <span class="approval-info">Waiting for admin approval</span>
-                                        <?php endif; ?>
+								<?php endif; ?>
                                     </div>
                                 </div>
-                            <?php endforeach; ?>
+				<?php endforeach; ?>
                         </div>
                     </div>
-                <?php endif; ?>
-            </div>
+	<?php endif; ?>
+</div>
         </div>
     </div>
 </section>
